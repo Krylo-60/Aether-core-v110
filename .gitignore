@@ -1,0 +1,14 @@
+# Local Vercel configuration
+.vercel
+
+# Environment variables containing secrets
+.env
+.env.local
+.env.*.local
+
+# Dependency folders
+node_modules/
+
+# OS-specific files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,1409 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Krishiv PB" />
+  <title>Aether Core v110 | Fusion Command â€” Krishiv PB</title>
+  <meta name="description" content="Aether Core v110 â€” the most advanced Aether build. Multi-mode AI, file uploads, failover mesh, prompt memory, and a full fusion command interface. Built by Krishiv PB." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://krishiv-new-portfoilo.vercel.app/aether-core-v110.html" />
+  <meta property="og:site_name" content="Krishiv Velocity" />
+  <meta property="og:url" content="https://krishiv-new-portfoilo.vercel.app/aether-core-v110.html" />
+  <meta property="og:title" content="Aether Core v110 | Fusion Command â€” Krishiv PB" />
+  <meta property="og:description" content="The most advanced Aether AI build. Multi-mode reasoning, file uploads, 12-node failover mesh, and a premium fusion command interface." />
+  <meta property="og:image" content="https://krishiv-new-portfoilo.vercel.app/social-preview.jpg" />
+  <meta property="og:image:alt" content="Aether Core v110 â€” Krishiv PB" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Aether Core v110 | Fusion Command â€” Krishiv PB" />
+  <meta name="twitter:description" content="The most advanced Aether AI build with multi-mode reasoning, file uploads, and a 12-node failover mesh." />
+  <meta name="twitter:image" content="https://krishiv-new-portfoilo.vercel.app/social-preview.jpg" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.3/purify.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <link rel="stylesheet" href="app-universe-shell.css" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;700&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #07121d;
+      --bg-soft: rgba(9, 18, 28, 0.86);
+      --panel: rgba(12, 24, 37, 0.8);
+      --line: rgba(120, 201, 255, 0.14);
+      --text: #eff8ff;
+      --muted: #9db5c8;
+      --accent: #6ce8ff;
+      --accent-2: #2d7dff;
+      --accent-3: #67ffb0;
+      --danger: #ff6b8d;
+      --glow: 0 10px 30px rgba(0, 0, 0, 0.18);
+      --mono: "JetBrains Mono", monospace;
+      --sans: "Space Grotesk", "Segoe UI", sans-serif;
+      --display: "Orbitron", "Space Grotesk", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at top left, rgba(45, 125, 255, 0.2), transparent 28%),
+        radial-gradient(circle at top right, rgba(103, 255, 176, 0.12), transparent 24%),
+        linear-gradient(180deg, #050b12 0%, #07121d 52%, #081521 100%);
+      color: var(--text);
+      font-family: var(--sans);
+      overflow: hidden;
+    }
+
+    body, button, input, select, textarea { font-family: var(--sans); }
+    h1, h2, h3, h4, h5, h6, .brand-mark, .hero-title { font-family: var(--display); }
+    code, pre, .mono, .eyebrow, .card-kicker, .metric-label, .mode-chip, .tool-btn, .mini-meta { font-family: var(--mono); }
+
+    #mesh {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: fixed;
+      width: 34rem;
+      height: 34rem;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.22;
+      pointer-events: none;
+      z-index: 0;
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+
+    .orb-a { top: -10rem; left: -7rem; background: radial-gradient(circle, rgba(108, 232, 255, 0.7), transparent 68%); }
+    .orb-b {
+      right: -10rem;
+      bottom: -11rem;
+      background: radial-gradient(circle, rgba(45, 125, 255, 0.6), transparent 70%);
+      animation-duration: 22s;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .orb { animation: none; opacity: 0.12; }
+      * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+
+    @keyframes drift {
+      from { transform: translate3d(-2rem, 0, 0) scale(0.96); }
+      to { transform: translate3d(2rem, 2rem, 0) scale(1.04); }
+    }
+
+    .layout {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr) 320px;
+      height: 100vh;
+      min-height: 100vh;
+    }
+
+    .rail {
+      background: var(--bg-soft);
+      backdrop-filter: blur(18px);
+      border-right: 1px solid var(--line);
+      padding: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      min-height: 0;
+      overflow: auto;
+    }
+
+    .rail.right {
+      border-right: 0;
+      border-left: 1px solid var(--line);
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border-radius: 1rem;
+      padding: 0.78rem;
+      box-shadow: var(--glow);
+    }
+
+    .brand-block { display: flex; flex-direction: column; gap: 0.55rem; }
+    .status-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.2rem;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.38rem 0.58rem;
+      border-radius: 999px;
+      border: 1px solid rgba(108, 232, 255, 0.16);
+      background: rgba(255,255,255,0.035);
+      color: #d7f4ff;
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .eyebrow {
+      margin: 0;
+      color: var(--accent);
+      letter-spacing: 0.22em;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      margin: 0;
+      font-size: 1.8rem;
+      line-height: 0.95;
+      letter-spacing: 0.06em;
+    }
+
+    .brand-sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .feature-grid, .quick-grid, .metric-grid, .command-grid { display: grid; gap: 0.7rem; }
+    .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
+
+    .feature-chip, .mode-btn, .tool-btn, .command-btn, .history-btn {
+      border: 1px solid var(--line);
+      border-radius: 0.85rem;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+    }
+
+    .feature-chip {
+      padding: 0.55rem 0.5rem;
+      text-align: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #c9ecff;
+    }
+
+    .mode-stack { display: grid; gap: 0.7rem; }
+    .mode-btn {
+      text-align: left;
+      padding: 0.9rem;
+      cursor: pointer;
+      transition: 0.22s ease;
+    }
+
+    .mode-btn:hover, .tool-btn:hover, .command-btn:hover, .history-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(108, 232, 255, 0.45);
+    }
+
+    .mode-btn.active {
+      border-color: rgba(108, 232, 255, 0.5);
+      background: linear-gradient(135deg, rgba(108, 232, 255, 0.14), rgba(45, 125, 255, 0.1));
+      box-shadow: 0 0 0 1px rgba(108, 232, 255, 0.08) inset;
+    }
+
+    .mode-btn strong { display: block; font-size: 0.9rem; margin-bottom: 0.2rem; }
+    .mode-btn span { display: block; color: var(--muted); font-size: 0.77rem; line-height: 1.35; }
+
+    .mode-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-bottom: 0.3rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.62rem;
+    }
+
+    .quick-grid, .command-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .command-grid.compact { margin-top: 0.7rem; }
+    .tool-btn, .command-btn, .history-btn {
+      padding: 0.72rem 0.72rem;
+      cursor: pointer;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .metric-card {
+      border: 1px solid var(--line);
+      border-radius: 0.85rem;
+      background: rgba(255, 255, 255, 0.025);
+      padding: 0.72rem;
+    }
+
+    .metric-label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.66rem;
+      letter-spacing: 0.16em;
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+    }
+
+    .metric-card strong { font-size: 1rem; color: var(--accent); }
+    .compact-note {
+      margin: 0.7rem 0 0;
+      color: var(--muted);
+      font-size: 0.75rem;
+      line-height: 1.45;
+    }
+    .status-feed, .history-feed {
+      display: grid;
+      gap: 0.45rem;
+      max-height: 11.5rem;
+      overflow: auto;
+      padding-right: 0.15rem;
+    }
+
+    .status-item, .history-btn { font-size: 0.82rem; line-height: 1.4; }
+    .status-item {
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 0.8rem;
+      background: rgba(255, 255, 255, 0.025);
+      padding: 0.68rem;
+      color: #bfd5e4;
+    }
+
+    .history-btn { width: 100%; text-align: left; background: rgba(255, 255, 255, 0.025); }
+    .workspace {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+      padding: 1rem 1rem 0.95rem;
+      gap: 0.8rem;
+    }
+
+    .hero-panel {
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      padding: 0.92rem 0.95rem;
+      background: linear-gradient(135deg, rgba(108, 232, 255, 0.08), rgba(45, 125, 255, 0.06) 45%, rgba(255,255,255,0.02));
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 0.85rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -45% 40%;
+      height: 16rem;
+      background: radial-gradient(circle, rgba(103, 255, 176, 0.16), transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-copy { display: flex; flex-direction: column; gap: 0.65rem; min-width: 0; }
+    .hero-title {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      line-height: 0.95;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-copy p { margin: 0; color: #d0e6f8; line-height: 1.65; max-width: 56rem; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .hero-tags span {
+      padding: 0.55rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: #d7f6ff;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .hero-radar {
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: rgba(5, 14, 24, 0.44);
+      padding: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      min-width: 0;
+    }
+
+    .signal-bars { display: grid; gap: 0.55rem; }
+    .signal-row {
+      display: grid;
+      grid-template-columns: 6rem minmax(0, 1fr) auto;
+      gap: 0.7rem;
+      align-items: center;
+      color: #d4ecfb;
+      font-size: 0.78rem;
+    }
+
+    .signal-track {
+      height: 0.5rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      overflow: hidden;
+    }
+
+    .signal-track span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    .chat-panel {
+      flex: 1;
+      min-height: 0;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: rgba(8, 17, 28, 0.82);
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 1.1rem;
+      border-bottom: 1px solid rgba(120, 201, 255, 0.1);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .chat-head strong { font-size: 0.95rem; letter-spacing: 0.03em; }
+    .chat-head span { color: var(--muted); font-size: 0.82rem; }
+
+    .chat-wall {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      scroll-behavior: smooth;
+    }
+
+    .hero-ghost {
+      margin: auto;
+      text-align: center;
+      color: rgba(226, 243, 255, 0.18);
+      max-width: 34rem;
+      padding: 2rem 1rem;
+    }
+
+    .hero-ghost h2 {
+      margin: 0 0 0.7rem;
+      font-size: clamp(2rem, 6vw, 4.5rem);
+      letter-spacing: 0.18em;
+    }
+
+    .hero-ghost p { margin: 0; color: rgba(226, 243, 255, 0.34); line-height: 1.7; }
+    .msg { display: flex; flex-direction: column; gap: 0.35rem; animation: rise 0.28s ease; }
+    @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .msg.user { align-items: flex-end; }
+    .msg-badge { color: var(--accent); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; }
+    .msg-bubble {
+      max-width: min(76rem, 95%);
+      width: 100%;
+      border-radius: 1rem;
+      padding: 0.9rem 0.95rem;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      line-height: 1.72;
+      font-size: 0.96rem;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+    }
+
+    .msg.user .msg-bubble {
+      background: linear-gradient(135deg, rgba(45, 125, 255, 0.2), rgba(108, 232, 255, 0.08));
+      border-color: rgba(108, 232, 255, 0.3);
+    }
+
+    .msg-bubble pre {
+      overflow: auto;
+      padding: 0.9rem;
+      border-radius: 0.9rem;
+      background: rgba(0, 0, 0, 0.36);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .msg-bubble code { color: #92f0ff; }
+
+    .composer {
+      padding: 0.85rem 0.95rem 0.95rem;
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 0.8rem;
+      background: rgba(255,255,255,0.025);
+    }
+
+    .context-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+      min-height: 1.75rem;
+    }
+
+    .context-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      border: 1px solid rgba(108, 232, 255, 0.24);
+      background: rgba(108, 232, 255, 0.09);
+      color: #d8fbff;
+      border-radius: 999px;
+      padding: 0.45rem 0.7rem;
+      font-size: 0.73rem;
+      font-weight: 700;
+    }
+
+    .context-pill button {
+      border: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      padding: 0;
+      font-size: 0.95rem;
+      line-height: 1;
+    }
+
+    .composer-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 0.75rem;
+      align-items: end;
+    }
+
+    #userInput {
+      width: 100%;
+      border-radius: 1.15rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(5, 12, 20, 0.84);
+      color: var(--text);
+      min-height: 2.9rem;
+      max-height: min(38vh, 260px);
+      padding: 0.72rem 1rem;
+      font-size: 0.96rem;
+      line-height: 1.55;
+      outline: none;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      resize: none;
+      overflow-y: auto;
+      transition: height 0.1s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    #userInput:focus {
+      border-color: rgba(108, 232, 255, 0.38);
+      box-shadow: 0 0 0 3px rgba(108, 232, 255, 0.08);
+    }
+
+    .action-btn {
+      border: 1px solid var(--line);
+      border-radius: 0.9rem;
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      padding: 0.85rem 1rem;
+      min-width: 6.1rem;
+      min-height: 2.9rem;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      align-self: end;
+    }
+
+    .action-btn.primary {
+      background: linear-gradient(135deg, var(--accent), #7fbaff);
+      color: #04111c;
+      border-color: transparent;
+    }
+
+    .helper-line {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem;
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
+    .node-matrix {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
+    .node-dot {
+      height: 2.3rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.03);
+      display: grid;
+      place-items: center;
+      color: #87a5b8;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .node-dot.active {
+      color: #05131d;
+      background: linear-gradient(135deg, var(--accent), #9ff1ff);
+      border-color: transparent;
+      box-shadow: 0 0 18px rgba(108, 232, 255, 0.28);
+    }
+
+    .node-dot.failed {
+      color: #ffd2dc;
+      border-color: rgba(255, 107, 141, 0.4);
+      background: rgba(255, 107, 141, 0.12);
+    }
+
+    .node-dot.complete {
+      color: #d9ffee;
+      border-color: rgba(103, 255, 176, 0.32);
+      background: rgba(103, 255, 176, 0.12);
+    }
+
+    .stack-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .panel-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .panel-title h3,
+    .panel-title h2 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .panel-title span {
+      color: var(--muted);
+      font-size: 0.73rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 1180px) {
+      .layout { grid-template-columns: 300px minmax(0, 1fr); }
+      .rail.right {
+        grid-column: 1 / -1;
+        min-height: 0;
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+    }
+
+    @media (max-width: 900px) {
+      body { overflow: auto; }
+      .layout { grid-template-columns: 1fr; height: auto; }
+      .rail, .workspace { min-height: auto; overflow: visible; }
+      .rail {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .hero-panel { grid-template-columns: 1fr; }
+      .chat-panel { min-height: 70vh; }
+    }
+
+    @media (max-width: 640px) {
+      .workspace, .rail { padding: 1rem; }
+      .hero-title { font-size: 1.85rem; }
+      .composer-row,
+      .quick-grid,
+      .command-grid,
+      .feature-grid,
+      .metric-grid,
+      .signal-row { grid-template-columns: 1fr; }
+      .node-matrix { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body class="app-theme-root">
+  <canvas id="mesh"></canvas>
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+
+  <div class="layout">
+    <aside class="rail">
+      <section class="panel brand-block">
+        <p class="eyebrow">Fusion Build</p>
+        <h1 class="brand-mark">AETHER CORE v110</h1>
+        <p class="brand-sub">The clean all-in-one Aether build with the best parts of v2.5, v55, and v104.</p>
+        <div class="status-pill-row">
+          <span class="status-pill">Primary Build</span>
+          <span class="status-pill">Live AI</span>
+          <span class="status-pill">All Features</span>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-chip">History</div>
+          <div class="feature-chip">Modes</div>
+          <div class="feature-chip">Failover</div>
+          <div class="feature-chip">Uploads</div>
+          <div class="feature-chip">Quick Packs</div>
+          <div class="feature-chip">Export</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <h2>Modes</h2>
+          <span id="modeStatus">Titan Fusion</span>
+        </div>
+        <div class="mode-stack">
+          <button class="mode-btn" type="button" data-mode="SYNTHESIS" onclick="setMode('SYNTHESIS', this)">
+            <span class="mode-chip">v2.5 logic layer</span>
+            <strong>Synthesis</strong>
+            <span>Balanced reasoning, clean structure, and direct answers for most tasks.</span>
+          </button>
+          <button class="mode-btn" type="button" data-mode="RESEARCH" onclick="setMode('RESEARCH', this)">
+            <span class="mode-chip">v104 analysis layer</span>
+            <strong>Research</strong>
+            <span>Pulls stronger breakdowns, comparisons, and more evidence-style response structure.</span>
+          </button>
+          <button class="mode-btn" type="button" data-mode="ARCHITECT" onclick="setMode('ARCHITECT', this)">
+            <span class="mode-chip">v55 operator layer</span>
+            <strong>Architect</strong>
+            <span>Focuses on systems, debugging, build plans, and implementation thinking.</span>
+          </button>
+          <button class="mode-btn active" type="button" data-mode="TITAN" onclick="setMode('TITAN', this)">
+            <span class="mode-chip">new v110 fusion layer</span>
+            <strong>Titan Fusion</strong>
+            <span>Long-form premium mode with stronger signal density and cleaner multi-step output.</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <h2>Prompts</h2>
+          <span>Quick starts</span>
+        </div>
+        <div class="quick-grid">
+          <button class="tool-btn" type="button" onclick="injectPrompt('Build a full roadmap from MVP to launch with milestones, risks, and best next steps.')">Roadmap</button>
+          <button class="tool-btn" type="button" onclick="injectPrompt('Review this idea and improve the structure, UI, and backend architecture.')">Review</button>
+          <button class="tool-btn" type="button" onclick="injectPrompt('Debug this issue step by step and explain the likely causes and exact fixes.')">Debug</button>
+          <button class="tool-btn" type="button" onclick="injectPrompt('Turn this into a polished feature plan with UI, API, data, and rollout notes.')">Feature Plan</button>
+          <button class="tool-btn" type="button" onclick="injectPrompt('Summarize the uploaded content into the key points, action items, and a better version.')">Summarize</button>
+          <button class="tool-btn" type="button" onclick="injectPrompt('Generate a high-quality answer that is clear, premium, and extremely useful.')">Premium Reply</button>
+        </div>
+      </section>
+    </aside>
+
+    <main class="workspace">
+      <section class="hero-panel">
+        <div class="hero-copy">
+          <p class="eyebrow">Omni Fusion Layer</p>
+          <h2 class="hero-title">One build. All the best Aether features.</h2>
+          <p>v110 keeps every important Aether feature, but presents them in a cleaner command station. You still get modes, file context, prompt recall, node routing, export, copy-last, and the same shared AI backend.</p>
+          <div class="hero-tags">
+            <span>Uploads</span>
+            <span>Prompt Memory</span>
+            <span>Failover Mesh</span>
+            <span>Multi-mode AI</span>
+          </div>
+        </div>
+        <div class="hero-radar">
+          <div class="panel-title">
+            <h3>Signal Radar</h3>
+            <span id="activeLabel">Titan Fusion</span>
+          </div>
+          <div class="signal-bars">
+            <div class="signal-row">
+              <label for="signalA">Reasoning</label>
+              <div class="signal-track"><span id="signalA" style="width: 88%"></span></div>
+              <strong id="signalAText">88%</strong>
+            </div>
+            <div class="signal-row">
+              <label for="signalB">Clarity</label>
+              <div class="signal-track"><span id="signalB" style="width: 92%"></span></div>
+              <strong id="signalBText">92%</strong>
+            </div>
+            <div class="signal-row">
+              <label for="signalC">System IQ</label>
+              <div class="signal-track"><span id="signalC" style="width: 95%"></span></div>
+              <strong id="signalCText">95%</strong>
+            </div>
+            <div class="signal-row">
+              <label for="signalD">Delivery</label>
+              <div class="signal-track"><span id="signalD" style="width: 90%"></span></div>
+              <strong id="signalDText">90%</strong>
+            </div>
+          </div>
+          <p class="stack-note">File uploads support plain text and <code>.pptx</code> extraction. For repeated prompts, press <strong>ArrowUp</strong>, <strong>ArrowDown</strong>, or <strong>Tab</strong> inside the input box.</p>
+        </div>
+      </section>
+
+      <section class="chat-panel">
+        <div class="chat-head">
+          <div>
+            <strong>Fusion Command Stream</strong>
+            <span id="chatMeta">Ready for a new prompt</span>
+          </div>
+          <span id="runtimeBadge">12-node mesh active</span>
+        </div>
+        <div class="chat-wall" id="chatWall">
+          <div class="hero-ghost" id="heroGhost">
+            <h2>AETHER</h2>
+            <p>Drop in a prompt, load a text file, or paste a problem. v110 is tuned to feel more complete, more useful, and more premium than the earlier public builds.</p>
+          </div>
+        </div>
+        <div class="composer">
+          <div class="context-bar" id="contextBar"></div>
+          <div class="composer-row">
+            <textarea id="userInput" rows="1" placeholder="Ask Aether Core v110 anything..."></textarea>
+            <button class="action-btn" type="button" onclick="document.getElementById('fileInput').click()">Add File</button>
+            <button class="action-btn primary" type="button" onclick="execute()">Ignite</button>
+          </div>
+          <div class="helper-line">
+            <span><strong>Enter</strong> sends. <strong>Shift+Enter</strong> adds a new line. <strong>ArrowUp</strong> and <strong>Tab</strong> recall previous prompts.</span>
+            <span id="helperStatus">No context loaded</span>
+          </div>
+          <input id="fileInput" type="file" accept=".txt,.md,.json,.csv,.js,.html,.css,.pptx" hidden />
+        </div>
+      </section>
+    </main>
+
+    <aside class="rail right">
+      <section class="panel">
+        <div class="panel-title">
+          <h2>Node Mesh</h2>
+          <span id="meshStatus">Standby</span>
+        </div>
+        <div class="metric-grid">
+          <div class="metric-card">
+            <span class="metric-label">Node Count</span>
+            <strong>12</strong>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Failover</span>
+            <strong id="failoverCount">0</strong>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Last Mode</span>
+            <strong id="lastModeMetric">Titan</strong>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Last Output</span>
+            <strong id="lastOutputMetric">0 chars</strong>
+          </div>
+        </div>
+        <div class="node-matrix" id="nodeMatrix"></div>
+        <div class="command-grid compact">
+          <button class="command-btn" type="button" onclick="copyLastResponse()">Copy Last</button>
+          <button class="command-btn" type="button" onclick="exportTranscript()">Export Chat</button>
+          <button class="command-btn" type="button" onclick="resetSystem()">New Thread</button>
+          <button class="command-btn" type="button" onclick="scanNodes()">Pulse Mesh</button>
+        </div>
+        <p class="compact-note">Mesh health, export, reset, and copy tools are grouped here so the control rail stays cleaner.</p>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <h2>Activity</h2>
+          <span>Live events</span>
+        </div>
+        <div class="status-feed" id="statusFeed"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <h2>Recall</h2>
+          <span>Recent prompts</span>
+        </div>
+        <div class="history-feed" id="historyFeed"></div>
+      </section>
+    </aside>
+  </div>
+
+  <script>
+    const NODE_COUNT = 12;
+    const PROMPT_HISTORY_KEY = "aether_v110_prompt_history";
+    const STATUS_LOG_KEY = "aether_v110_status_log";
+    const MODE_SIGNAL_MAP = {
+      SYNTHESIS: { label: "Synthesis", radar: [84, 93, 82, 91] },
+      RESEARCH: { label: "Research", radar: [91, 88, 90, 86] },
+      ARCHITECT: { label: "Architect", radar: [89, 87, 96, 84] },
+      TITAN: { label: "Titan Fusion", radar: [95, 92, 97, 90] }
+    };
+
+    let currentMode = "TITAN";
+    let promptHistory = [];
+    let historyIndex = -1;
+    let statusLog = [];
+    let lastResponse = "";
+    let uploadedContext = "";
+    let uploadedName = "";
+    let failoverCount = 0;
+
+    try {
+      promptHistory = JSON.parse(localStorage.getItem(PROMPT_HISTORY_KEY) || "[]");
+      if (!Array.isArray(promptHistory)) promptHistory = [];
+    } catch {
+      promptHistory = [];
+    }
+
+    try {
+      statusLog = JSON.parse(localStorage.getItem(STATUS_LOG_KEY) || "[]");
+      if (!Array.isArray(statusLog)) statusLog = [];
+    } catch {
+      statusLog = [];
+    }
+
+    const input = document.getElementById("userInput");
+    const fileInput = document.getElementById("fileInput");
+    const chatWall = document.getElementById("chatWall");
+    const statusFeed = document.getElementById("statusFeed");
+    const historyFeed = document.getElementById("historyFeed");
+    const contextBar = document.getElementById("contextBar");
+    const nodeMatrix = document.getElementById("nodeMatrix");
+
+    Array.from({ length: NODE_COUNT }).forEach((_, index) => {
+      const node = document.createElement("div");
+      node.className = "node-dot";
+      node.id = `node-${index}`;
+      node.textContent = `N${index + 1}`;
+      nodeMatrix.appendChild(node);
+    });
+
+    function safeMarkdown(text) {
+      const value = String(text || "");
+      if (window.marked && typeof window.marked.parse === "function") {
+        window.marked.setOptions({ breaks: true });
+        const html = window.marked.parse(value);
+        return window.DOMPurify ? window.DOMPurify.sanitize(html) : html;
+      }
+      return escapeHtml(value).replace(/\n/g, "<br>");
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function pushStatus(message) {
+      const stamp = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+      statusLog = [`${stamp}  ${message}`, ...statusLog].slice(0, 18);
+      localStorage.setItem(STATUS_LOG_KEY, JSON.stringify(statusLog));
+      renderStatus();
+    }
+
+    function renderStatus() {
+      statusFeed.innerHTML = statusLog.length
+        ? statusLog.map((entry) => `<div class="status-item">${entry}</div>`).join("")
+        : `<div class="status-item">System ready. No recent events yet.</div>`;
+    }
+
+    function renderHistory() {
+      historyFeed.innerHTML = promptHistory.length
+        ? promptHistory.map((entry, index) => `<button class="history-btn" type="button" data-history-index="${index}">${escapeHtml(entry)}</button>`).join("")
+        : `<div class="status-item">Your recent prompts will appear here.</div>`;
+    }
+
+    function renderContext() {
+      if (!uploadedContext || !uploadedName) {
+        contextBar.innerHTML = "";
+        document.getElementById("helperStatus").textContent = "No context loaded";
+        return;
+      }
+      contextBar.innerHTML = `<span class="context-pill">${escapeHtml(uploadedName)} <button type="button" onclick="clearContext()" aria-label="Remove context">x</button></span>`;
+      document.getElementById("helperStatus").textContent = "Context file attached";
+    }
+
+    function clearContext() {
+      uploadedContext = "";
+      uploadedName = "";
+      fileInput.value = "";
+      renderContext();
+      pushStatus("Context stream cleared");
+    }
+
+    function resizeInput(forceReset = false) {
+      if (!input) return;
+      const baseHeight = "2.9rem";
+      input.style.height = "auto";
+      if (forceReset || !input.value.trim()) {
+        input.style.height = baseHeight;
+        return;
+      }
+      input.style.height = `${Math.min(input.scrollHeight, 260)}px`;
+    }
+
+    function reusePrompt(index) {
+      const text = promptHistory[index] || "";
+      input.value = text;
+      resizeInput();
+      input.focus();
+      input.setSelectionRange(input.value.length, input.value.length);
+    }
+
+    function updateModeRadar(mode) {
+      const config = MODE_SIGNAL_MAP[mode] || MODE_SIGNAL_MAP.TITAN;
+      const [a, b, c, d] = config.radar;
+      document.getElementById("modeStatus").textContent = config.label;
+      document.getElementById("activeLabel").textContent = config.label;
+      document.getElementById("lastModeMetric").textContent = config.label;
+      document.getElementById("signalA").style.width = `${a}%`;
+      document.getElementById("signalB").style.width = `${b}%`;
+      document.getElementById("signalC").style.width = `${c}%`;
+      document.getElementById("signalD").style.width = `${d}%`;
+      document.getElementById("signalAText").textContent = `${a}%`;
+      document.getElementById("signalBText").textContent = `${b}%`;
+      document.getElementById("signalCText").textContent = `${c}%`;
+      document.getElementById("signalDText").textContent = `${d}%`;
+      document.getElementById("chatMeta").textContent = `${config.label} mode armed`;
+    }
+
+    function setMode(mode, el) {
+      currentMode = mode;
+      document.querySelectorAll(".mode-btn").forEach((button) => button.classList.remove("active"));
+      if (el) el.classList.add("active");
+      updateModeRadar(mode);
+      pushStatus(`Mode changed to ${MODE_SIGNAL_MAP[mode].label}`);
+    }
+
+    function systemPromptForMode(mode) {
+      const modePrompts = {
+        SYNTHESIS: "You are Aether Core v110 in Synthesis mode. Give concise, polished, high-signal answers with clear sections when helpful.",
+        RESEARCH: "You are Aether Core v110 in Research mode. Give deeper analysis, better comparisons, stronger framing, and careful structured reasoning.",
+        ARCHITECT: "You are Aether Core v110 in Architect mode. Focus on systems thinking, implementation detail, debugging steps, architecture quality, and exact fixes.",
+        TITAN: "You are Aether Core v110 in Titan Fusion mode. Combine premium clarity, technical strength, confident tone, and strong structure. Be extremely useful."
+      };
+      return modePrompts[mode] || modePrompts.TITAN;
+    }
+
+    function render(role, content) {
+      const ghost = document.getElementById("heroGhost");
+      if (ghost) ghost.remove();
+      const wrapper = document.createElement("div");
+      wrapper.className = `msg ${role}`;
+      wrapper.innerHTML = `
+        <div class="msg-badge">${role === "user" ? "Signal Source" : "Aether v110"}</div>
+        <div class="msg-bubble">${content}</div>
+      `;
+      chatWall.appendChild(wrapper);
+      chatWall.scrollTop = chatWall.scrollHeight;
+      return wrapper.querySelector(".msg-bubble");
+    }
+
+    function injectPrompt(text) {
+      input.value = text;
+      resizeInput();
+      input.focus();
+      input.setSelectionRange(input.value.length, input.value.length);
+    }
+
+    function recallPrompt(step) {
+      if (!promptHistory.length) return;
+      if (historyIndex < 0) historyIndex = 0;
+      else historyIndex = Math.min(promptHistory.length - 1, Math.max(0, historyIndex + step));
+      input.value = promptHistory[historyIndex] || "";
+      resizeInput();
+      input.focus();
+      input.setSelectionRange(input.value.length, input.value.length);
+    }
+
+    async function readUploadedFile(file) {
+      if (file.name.toLowerCase().endsWith(".pptx")) {
+        const zip = await JSZip.loadAsync(file);
+        const slides = Object.keys(zip.files).filter((name) => name.startsWith("ppt/slides/slide") && name.endsWith(".xml"));
+        let text = "";
+        for (const slide of slides) {
+          const xml = await zip.file(slide).async("text");
+          const nodes = new DOMParser().parseFromString(xml, "text/xml").getElementsByTagName("a:t");
+          for (const node of nodes) text += `${node.textContent} `;
+        }
+        return text.trim();
+      }
+      return file.text();
+    }
+
+    async function handleFileSelect(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      uploadedName = file.name;
+      
+      contextBar.innerHTML = `<span class="context-pill" style="opacity: 0.7;">${escapeHtml(uploadedName)} (Loading...)</span>`;
+      document.getElementById("helperStatus").textContent = "Parsing file...";
+      pushStatus(`Parsing ${file.name}`);
+      
+      try {
+        uploadedContext = (await readUploadedFile(file)).trim();
+        renderContext();
+        pushStatus(`Context stream ready from ${file.name}`);
+      } catch (e) {
+        uploadedContext = "";
+        uploadedName = "";
+        renderContext();
+        pushStatus(`Context load failed for ${file.name}`);
+      }
+    }
+
+    function markNodeState(index, state) {
+      const node = document.getElementById(`node-${index}`);
+      if (!node) return;
+      node.classList.remove("active", "failed", "complete");
+      if (state) node.classList.add(state);
+    }
+
+    function resetNodeStates() {
+      document.querySelectorAll(".node-dot").forEach((node) => node.classList.remove("active", "failed", "complete"));
+      document.getElementById("meshStatus").textContent = "Standby";
+    }
+
+    async function routePrompt(prompt, loader, index = 0) {
+      if (index >= NODE_COUNT) {
+        loader.innerHTML = safeMarkdown("I couldn't complete the request because every route in the mesh failed. Please try again.");
+        document.getElementById("meshStatus").textContent = "Mesh fault";
+        pushStatus("All nodes exhausted during failover");
+        return;
+      }
+
+      document.getElementById("meshStatus").textContent = `Routing N${index + 1}`;
+      document.getElementById("runtimeBadge").textContent = `Node ${index + 1} active`;
+      markNodeState(index, "active");
+      pushStatus(`Routing request through node ${index + 1}`);
+
+      try {
+        const response = await fetch("/api/aether/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prompt,
+            systemPrompt: systemPromptForMode(currentMode)
+          })
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.error || "Aether request failed");
+
+        const text = String(data.text || "No response.");
+        lastResponse = text;
+        loader.innerHTML = safeMarkdown(text);
+        markNodeState(index, "complete");
+        document.getElementById("meshStatus").textContent = `Stable on N${index + 1}`;
+        document.getElementById("chatMeta").textContent = `${MODE_SIGNAL_MAP[currentMode].label} response complete`;
+        document.getElementById("lastOutputMetric").textContent = `${text.length} chars`;
+        pushStatus(`Response completed on node ${index + 1}`);
+      } catch (error) {
+        failoverCount += 1;
+        document.getElementById("failoverCount").textContent = String(failoverCount);
+        markNodeState(index, "failed");
+        pushStatus(`Node ${index + 1} failed, rerouting (${error && error.message ? error.message : "request error"})`);
+        await routePrompt(prompt, loader, index + 1);
+      }
+    }
+
+    async function execute() {
+      let loader = null;
+      try {
+        const value = input.value.trim();
+        if (!value && !uploadedContext) {
+          pushStatus("No prompt was submitted");
+          return;
+        }
+
+        const heroPanel = document.querySelector(".hero-panel");
+        if (heroPanel) heroPanel.style.display = "none";
+
+        const finalPrompt = uploadedContext
+          ? `[Context file: ${uploadedName}]\n${uploadedContext}\n\n[User request]\n${value || "Analyze the uploaded context and respond."}`
+          : value;
+
+        if (value) {
+          promptHistory = [value, ...promptHistory.filter((item) => item !== value)].slice(0, 30);
+          localStorage.setItem(PROMPT_HISTORY_KEY, JSON.stringify(promptHistory));
+          renderHistory();
+        }
+
+        historyIndex = -1;
+        render("user", escapeHtml(value || `Use the attached context file: ${uploadedName}`));
+        input.value = "";
+        resizeInput(true);
+        loader = render("bot", "<span class=\"mini-meta\">Aether v110 is composing a response...</span>");
+        resetNodeStates();
+
+        if (!uploadedContext && /^[0-9+\-*/().^%\u221a\s]+$/.test(value) && /[0-9]/.test(value) && value.replace(/\s/g, '').length >= 3) {
+            try {
+                const safeExpr = value.replace(/\s/g, '').replace(/\^/g, '**').replace(/\u221a/g, 'Math.sqrt');
+                const result = eval(safeExpr);
+                if (result !== null && result !== undefined && !isNaN(result) && result !== Infinity) {
+                    setTimeout(() => {
+                        lastResponse = `The calculated result is: **${result}**`;
+                        loader.innerHTML = safeMarkdown(lastResponse);
+                        pushStatus(`Response completed on node ${Math.floor(Math.random()*12)+1}`);
+                        document.getElementById("chatMeta").textContent = `${MODE_SIGNAL_MAP[currentMode] ? MODE_SIGNAL_MAP[currentMode].label : 'SYNTHESIS'} response complete`;
+                        document.getElementById("lastOutputMetric").textContent = `${lastResponse.length} chars`;
+                        resetNodeStates();
+                        clearContext();
+                    }, 600 + Math.random() * 400);
+                    return;
+                }
+            } catch (e) {}
+        }
+
+        pushStatus("Prompt accepted");
+        await routePrompt(finalPrompt, loader);
+        clearContext();
+      } catch (error) {
+        pushStatus(`Execute failed (${error && error.message ? error.message : "unknown error"})`);
+        if (!loader) {
+          loader = render("bot", "");
+        }
+        loader.innerHTML = safeMarkdown("Something went wrong before the request could finish. Please try again.");
+      }
+    }
+
+    async function copyLastResponse() {
+      if (!lastResponse) return;
+      try {
+        await navigator.clipboard.writeText(lastResponse);
+        pushStatus("Last response copied to clipboard");
+      } catch {
+        pushStatus("Clipboard copy was blocked");
+      }
+    }
+
+    function exportTranscript() {
+      const text = chatWall.innerText.trim();
+      if (!text) return;
+      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `aether-v110-transcript-${Date.now()}.txt`;
+      link.click();
+      URL.revokeObjectURL(url);
+      pushStatus("Transcript exported");
+    }
+
+    function resetSystem() {
+      chatWall.innerHTML = `
+        <div class="hero-ghost" id="heroGhost">
+          <h2>AETHER</h2>
+          <p>Fresh thread initialized. Ask a new question, attach a file, or use one of the quick packs.</p>
+        </div>
+      `;
+      const heroPanel = document.querySelector(".hero-panel");
+      if (heroPanel) heroPanel.style.display = "";
+      
+      lastResponse = "";
+      input.value = "";
+      resizeInput(true);
+      clearContext();
+      resetNodeStates();
+      document.getElementById("chatMeta").textContent = "Fresh thread initialized";
+      document.getElementById("runtimeBadge").textContent = "12-node mesh active";
+      document.getElementById("lastOutputMetric").textContent = "0 chars";
+      pushStatus("Thread reset");
+    }
+
+    function scanNodes() {
+      resetNodeStates();
+      pushStatus("Pulse mesh scan started");
+      Array.from({ length: NODE_COUNT }).forEach((_, index) => {
+        window.setTimeout(() => {
+          markNodeState(index, "complete");
+          if (index === NODE_COUNT - 1) {
+            document.getElementById("meshStatus").textContent = "All nodes healthy";
+            pushStatus("Pulse mesh scan finished");
+          }
+        }, index * 70);
+      });
+    }
+
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        execute();
+        return;
+      }
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+        recallPrompt(1);
+        return;
+      }
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        if (historyIndex <= 0) {
+          historyIndex = -1;
+          input.value = "";
+          resizeInput(true);
+          return;
+        }
+        recallPrompt(-1);
+        return;
+      }
+      if (event.key === "Tab" && !event.shiftKey) {
+        event.preventDefault();
+        recallPrompt(historyIndex < 0 ? 0 : 1);
+        return;
+      }
+      historyIndex = -1;
+    });
+
+    fileInput.addEventListener("change", handleFileSelect);
+    fileInput.addEventListener("click", function() { this.value = null; });
+
+    historyFeed.addEventListener("click", (event) => {
+      const target = event.target.closest("[data-history-index]");
+      if (!target) return;
+      reusePrompt(Number(target.getAttribute("data-history-index")));
+    });
+
+    const meshCanvas = document.getElementById("mesh");
+    const meshContext = meshCanvas.getContext("2d");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const meshDots = [];
+
+    function resizeMesh() {
+      meshCanvas.width = window.innerWidth;
+      meshCanvas.height = window.innerHeight;
+    }
+
+    function seedMesh() {
+      meshDots.length = 0;
+      for (let index = 0; index < 42; index += 1) {
+        meshDots.push({
+          x: Math.random() * meshCanvas.width,
+          y: Math.random() * meshCanvas.height,
+          vx: (Math.random() - 0.5) * 0.35,
+          vy: (Math.random() - 0.5) * 0.35
+        });
+      }
+    }
+
+    let mouseX = -1000;
+    let mouseY = -1000;
+    window.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animateMesh() {
+      meshContext.clearRect(0, 0, meshCanvas.width, meshCanvas.height);
+      for (const dot of meshDots) {
+        // Interaction logic
+        const dx = dot.x - mouseX;
+        const dy = dot.y - mouseY;
+        const dist = Math.hypot(dx, dy);
+        if (dist < 180) {
+          const force = (180 - dist) / 180;
+          dot.x += dx * force * 0.04;
+          dot.y += dy * force * 0.04;
+        }
+
+        dot.x += dot.vx;
+        dot.y += dot.vy;
+        if (dot.x < 0 || dot.x > meshCanvas.width) dot.vx *= -1;
+        if (dot.y < 0 || dot.y > meshCanvas.height) dot.vy *= -1;
+
+        meshContext.beginPath();
+        meshContext.fillStyle = "rgba(108, 232, 255, 0.4)";
+        meshContext.arc(dot.x, dot.y, 1.8, 0, Math.PI * 2);
+        meshContext.fill();
+
+        for (const other of meshDots) {
+          const distance = Math.hypot(dot.x - other.x, dot.y - other.y);
+          if (distance < 160) {
+            meshContext.strokeStyle = `rgba(108, 232, 255, ${0.15 - distance / 1200})`;
+            meshContext.lineWidth = 0.8;
+            meshContext.beginPath();
+            meshContext.moveTo(dot.x, dot.y);
+            meshContext.lineTo(other.x, other.y);
+            meshContext.stroke();
+          }
+        }
+      }
+      if (!reduceMotion) requestAnimationFrame(animateMesh);
+    }
+
+    let resizeTimeout;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        resizeMesh();
+        seedMesh();
+        if (reduceMotion) animateMesh();
+      }, 150);
+    });
+
+    if (reduceMotion) {
+      window.addEventListener("mousemove", () => {});
+    }
+
+    window.addEventListener("error", (event) => {
+      pushStatus(`UI error (${event.message || "unknown"})`);
+    });
+
+    window.addEventListener("unhandledrejection", (event) => {
+      const reason = event && event.reason && event.reason.message ? event.reason.message : "promise rejected";
+      pushStatus(`Async error (${reason})`);
+    });
+
+    resizeMesh();
+    seedMesh();
+    if (reduceMotion) {
+      meshDots.forEach((dot, index) => {
+        dot.vx = 0;
+        dot.vy = 0;
+        dot.x = (index % 7) * (meshCanvas.width / 7) + 20;
+        dot.y = Math.floor(index / 7) * (meshCanvas.height / 6) + 20;
+      });
+    }
+    animateMesh();
+    renderStatus();
+    renderHistory();
+    renderContext();
+    updateModeRadar(currentMode);
+    resizeInput(true);
+    input.addEventListener("input", () => {
+      resizeInput();
+    });
+
+    pushStatus("Aether Core v110 initialized");
+    window.execute = execute;
+    window.injectPrompt = injectPrompt;
+    window.copyLastResponse = copyLastResponse;
+    window.exportTranscript = exportTranscript;
+    window.resetSystem = resetSystem;
+    window.scanNodes = scanNodes;
+    window.setMode = setMode;
+    window.clearContext = clearContext;
+  </script>
+
+  <script src="app-catalog.js"></script>
+  <script src="app-universe-shell.js" defer></script>
+  <script src="usage-tracker.js" defer></script>
+</body>
+</html>

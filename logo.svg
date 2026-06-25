@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Krishiv Velocity Logo</title>
+  <desc id="desc">A neon blue Krishiv Velocity badge logo inspired by a futuristic gaming emblem.</desc>
+  <defs>
+    <linearGradient id="badge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f4fa3" />
+      <stop offset="52%" stop-color="#0b256f" />
+      <stop offset="100%" stop-color="#080d39" />
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#75ffe3" />
+      <stop offset="48%" stop-color="#5ce7ff" />
+      <stop offset="100%" stop-color="#9fffd7" />
+    </linearGradient>
+    <linearGradient id="textBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#63f5d2" />
+      <stop offset="100%" stop-color="#3fb8ff" />
+    </linearGradient>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect x="56" y="56" width="400" height="400" rx="84" fill="url(#badge)" />
+
+  <g opacity="0.22" stroke="#6fe8ff" stroke-width="3" fill="none">
+    <circle cx="256" cy="256" r="138" />
+    <circle cx="256" cy="256" r="108" />
+    <path d="M118 256h276M256 118v276M158 158l196 196M354 158L158 354" opacity="0.45" />
+  </g>
+
+  <g filter="url(#softGlow)">
+    <path
+      d="M144 158h48v84l96-84h68l-102 92 116 112h-72l-88-86-18 16v70h-48z"
+      fill="none"
+      stroke="#52f2da"
+      stroke-width="20"
+      stroke-linejoin="round"
+      stroke-linecap="round"
+    />
+    <path
+      d="M286 166l78 0-66 58 36 0-76 102-2-66-44 0z"
+      fill="none"
+      stroke="#8cffdf"
+      stroke-width="16"
+      stroke-linejoin="round"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <g>
+    <path
+      d="M144 158h48v84l96-84h68l-102 92 116 112h-72l-88-86-18 16v70h-48z"
+      fill="none"
+      stroke="url(#glow)"
+      stroke-width="12"
+      stroke-linejoin="round"
+      stroke-linecap="round"
+    />
+    <path
+      d="M286 166l78 0-66 58 36 0-76 102-2-66-44 0z"
+      fill="none"
+      stroke="#d8fff5"
+      stroke-width="10"
+      stroke-linejoin="round"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <g transform="translate(0 14)">
+    <text
+      x="256"
+      y="366"
+      text-anchor="middle"
+      fill="#ffffff"
+      font-size="56"
+      font-family="Arial, Helvetica, sans-serif"
+      font-style="italic"
+      font-weight="900"
+      letter-spacing="1.5"
+    >KRISHIV</text>
+    <text
+      x="256"
+      y="408"
+      text-anchor="middle"
+      fill="url(#textBlue)"
+      font-size="34"
+      font-family="Arial, Helvetica, sans-serif"
+      font-style="italic"
+      font-weight="900"
+      letter-spacing="2"
+    >VELOCITY</text>
+  </g>
+</svg>
