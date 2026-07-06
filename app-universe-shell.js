@@ -203,7 +203,7 @@
     { name: "Phonk Room", href: "phonk-room.html", tag: "Music", tier: "featured" },
     { name: "Git Devlog", href: "changelog.html", tag: "Updates", tier: "featured" },
     { name: "Master Nexus", href: "krylo-blox-master-nexus.html", tag: "Core", tier: "featured" },
-    { name: "Aether v110", href: "aether-core-v110.html", tag: "Core", tier: "featured" },
+    { name: "Krims Core v110", href: "krims-core-v110.html", tag: "Core", tier: "featured" },
     { name: "Homework Hub", href: "homework-hub.html", tag: "App" },
     { name: "Attendance Tracker", href: "attendance-tracker.html", tag: "App" },
     { name: "Link Locker", href: "link-locker.html", tag: "App" },
@@ -286,7 +286,7 @@
     "all-links.html": "app-icon-all-links.svg",
     "release-notes.html": "logo.svg",
     "krylo-blox-master-nexus.html": "core-icon-master-nexus.svg",
-    "aether-core-v110.html": "core-icon-aether-v110.svg",
+    "krims-core-v110.html": "core-icon-aether-v110.svg",
     "homework-hub.html": "app-icon-homework-hub.svg",
     "attendance-tracker.html": "app-icon-attendance-tracker.svg",
     "link-locker.html": "app-icon-link-locker.svg",
@@ -937,7 +937,7 @@
   }
 
   function openAiZone() {
-    launchHref(path === "aether-core-v110.html" ? "idea-lab-ai.html" : "aether-core-v110.html");
+    launchHref(path === "krims-core-v110.html" ? "idea-lab-ai.html" : "krims-core-v110.html");
   }
 
   function openLinksDirectory() {
@@ -1640,7 +1640,7 @@
     if (!feedText) return;
     const messages = [
       "Krylo-Nexus Protocol: Online",
-      "Aether Mesh Stability: 99.8%",
+      "Krims Mesh Stability: 99.8%",
       "Synchronizing Aurora Flux...",
       "AI Reasoning Engine: Optimized",
       "Scanning App Galaxy for updates...",

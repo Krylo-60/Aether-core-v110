@@ -1,8 +1,8 @@
-# 🌌 Aether Core AI v110 — Fusion Command Station
+# 🌌 Krims Core AI v110 — Fusion Command Station
 
-Aether Core AI v110 is a premium, cyberpunk-inspired AI dashboard and command station. It combines advanced multi-mode AI reasoning (Synthesis, Research, Architect, and Titan Fusion), file upload parsing, an offline fallback engine, and a 12-node simulated failover mesh.
+Krims Core AI v110 is a premium, cyberpunk-inspired AI dashboard and command station. It combines advanced multi-mode AI reasoning (Synthesis, Research, Architect, and Titan Fusion), file upload parsing, an offline fallback engine, and a 12-node simulated failover mesh.
 
-Originally built as part of the Velocity Master Coder portfolio, this repository extracts Aether Core AI into a standalone, secure, and production-ready app. It features a high-performance **Vanilla HTML/CSS/JS** frontend and a **Node.js Serverless Backend** optimized for Vercel.
+Originally built as part of the Velocity Master Coder portfolio, this repository extracts Krims Core AI into a standalone, secure, and production-ready app. It features a high-performance **Vanilla HTML/CSS/JS** frontend and a **Node.js Serverless Backend** optimized for Vercel.
 
 ---
 
@@ -37,7 +37,7 @@ Originally built as part of the Velocity Master Coder portfolio, this repository
 
 - **Frontend**: Vanilla HTML5, CSS Variables, ES6 JavaScript, and responsive layout.
 - **CDN Scripts**: `marked` (Markdown parsing), `DOMPurify` (HTML sanitization), and `JSZip` (PowerPoint parsing).
-- **Backend**: Vercel Node.js Serverless Functions (`/api/aether/chat`, `/api/agent/status`, `/api/usage/track`).
+- **Backend**: Vercel Node.js Serverless Functions (`/api/krims/chat`, `/api/agent/status`, `/api/usage/track`).
 - **Dependencies**: **Zero** npm dependencies. Serves using native fetch requests, keeping deployment extremely lightweight and fast.
 
 ---
@@ -74,7 +74,7 @@ Initialize git and push to your GitHub repository:
 ```bash
 git init
 git add .
-git commit -m "Initial commit of standalone Aether Core AI"
+git commit -m "Initial commit of standalone Krims Core AI"
 git branch -M master
 git remote add origin https://github.com/Krylo-60/Aether-core-v110.git
 git push -u origin master
